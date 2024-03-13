@@ -25,7 +25,9 @@ const filters = {
   },
 };
 
-const sort = { last_message_at: 'desc' };
+const sort = {
+  last_message_at: -1,
+};
 
 const ChannelListScreen = (props:any) => {
   return (
