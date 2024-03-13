@@ -10,7 +10,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {useChatClient} from './useChatClient';
+import {AppProvider} from './AppContext';
 
 const Stack = createStackNavigator();
 
@@ -31,10 +33,14 @@ const NavigationStack = () => {
 
 export default () => {
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <NavigationContainer>
-        <NavigationStack />
-      </NavigationContainer>
-    </SafeAreaView>
+    <AppProvider>
+      <GestureHandlerRootView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1}}>
+          <NavigationContainer>
+            <NavigationStack />
+          </NavigationContainer>
+        </SafeAreaView>
+      </GestureHandlerRootView>
+    </AppProvider>
   );
 };
