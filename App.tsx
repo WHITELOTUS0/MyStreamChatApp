@@ -13,6 +13,7 @@ import {Text} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {useChatClient} from './useChatClient';
 import {AppProvider} from './AppContext';
+import {OverlayProvider} from 'stream-chat-react-native'; // Or stream-chat-expo
 
 const Stack = createStackNavigator();
 
@@ -25,9 +26,11 @@ const NavigationStack = () => {
     return <Text>Loading chat ...</Text>;
   }
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-    </Stack.Navigator>
+    <OverlayProvider>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </OverlayProvider>
   );
 };
 
