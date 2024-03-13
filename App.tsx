@@ -13,7 +13,7 @@ import {Text} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {useChatClient} from './useChatClient';
 import {AppProvider, useAppContext} from './AppContext';
-import {Chat, OverlayProvider, ChannelList} from 'stream-chat-react-native'; // Or stream-chat-expo
+import {Chat, OverlayProvider, ChannelList, Channel, MessageList,MessageInput} from 'stream-chat-react-native'; // Or stream-chat-expo
 import {StreamChat} from 'stream-chat';
 import {chatApiKey, chatUserId} from './chatConfig';
 
@@ -30,7 +30,14 @@ const sort = {
 };
 
 const ChannelScreen = (props: any) => {
-  return null;
+  const { channel } = useAppContext();
+
+  return (
+    <Channel channel={channel}>
+      <MessageList />
+      <MessageInput />
+    </Channel>
+  );
 };
 
 const ChannelListScreen = (props: any) => {
@@ -47,6 +54,11 @@ const ChannelListScreen = (props: any) => {
     />
   );
 };
+
+const ThreadScreen = (props:any) => {
+  return null;
+}
+
 
 const chatClient = StreamChat.getInstance(chatApiKey);
 
@@ -65,6 +77,7 @@ const NavigationStack = () => {
             component={ChannelListScreen}
           />
           <Stack.Screen name="ChannelScreen" component={ChannelScreen} />
+          <Stack.Screen name="ThreadScreen" component={ThreadScreen} />
         </Stack.Navigator>
       </Chat>
     </OverlayProvider>
