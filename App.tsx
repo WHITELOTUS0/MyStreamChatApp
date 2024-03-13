@@ -91,7 +91,7 @@ const NavigationStack = () => {
   }
   return (
     <OverlayProvider>
-      <Chat client={chatClient}>
+      <Chat client={chatClient} enableOfflineSupport>
         <Stack.Navigator>
           <Stack.Screen
             name="ChannelListScreen"
