@@ -13,7 +13,15 @@ import {Text} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {useChatClient} from './useChatClient';
 import {AppProvider, useAppContext} from './AppContext';
-import {Chat, OverlayProvider, ChannelList, Channel, MessageList,MessageInput} from 'stream-chat-react-native'; // Or stream-chat-expo
+import {
+  Chat,
+  OverlayProvider,
+  ChannelList,
+  Channel,
+  MessageList,
+  MessageInput,
+  Thread,
+} from 'stream-chat-react-native'; // Or stream-chat-expo
 import {StreamChat} from 'stream-chat';
 import {chatApiKey, chatUserId} from './chatConfig';
 
@@ -30,11 +38,19 @@ const sort = {
 };
 
 const ChannelScreen = (props: any) => {
-  const { channel } = useAppContext();
+  const {navigation} = props;
+  const {channel, setThread} = useAppContext();
 
   return (
     <Channel channel={channel}>
-      <MessageList />
+      <MessageList
+        onThreadSelect={message => {
+          if (channel?.id) {
+            setThread(message);
+            navigation.navigate('ThreadScreen');
+          }
+        }}
+      />
       <MessageInput />
     </Channel>
   );
@@ -55,10 +71,15 @@ const ChannelListScreen = (props: any) => {
   );
 };
 
-const ThreadScreen = (props:any) => {
-  return null;
-}
+const ThreadScreen = (props: any) => {
+  const {channel, thread} = useAppContext();
 
+  return (
+    <Channel channel={channel} thread={thread} threadList>
+      <Thread />
+    </Channel>
+  );
+};
 
 const chatClient = StreamChat.getInstance(chatApiKey);
 
