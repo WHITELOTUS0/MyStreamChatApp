@@ -13,11 +13,15 @@ import {Text} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {useChatClient} from './useChatClient';
 import {AppProvider} from './AppContext';
-import {OverlayProvider} from 'stream-chat-react-native'; // Or stream-chat-expo
+import {Chat, OverlayProvider} from 'stream-chat-react-native'; // Or stream-chat-expo
+import { StreamChat } from 'stream-chat';
+import { chatApiKey } from './chatConfig';
 
 const Stack = createStackNavigator();
 
 const HomeScreen = () => <Text>Home Screen</Text>;
+
+const chatClient = StreamChat.getInstance(chatApiKey);
 
 const NavigationStack = () => {
   const {clientIsReady} = useChatClient();
@@ -27,9 +31,11 @@ const NavigationStack = () => {
   }
   return (
     <OverlayProvider>
+      <Chat client={chatClient}>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
       </Stack.Navigator>
+      </Chat>
     </OverlayProvider>
   );
 };
